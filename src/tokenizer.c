@@ -5,7 +5,7 @@
 /* Returns true if char is either a tab ('\t') or " "*/
 int space_char(char c){
   if (c == '\t' || c == ' '){
-    return 1;
+    return 1
   }
   return 0;
 }
@@ -18,10 +18,10 @@ int non_space_char(char c){
   return 0;
 }
 
-char *word_start(char *str){
+char *token_start(char *str){
   int i;
-  for (i = 0; *(str + i) !+ '\0'; i++){
-    /* Checks that current position is not an empty spaceOB */
+  for (i = 0; *(str + i) != '\0'; i++){
+    /* Checks that current position is not an empty space */
     if (non_space_char(*(str+i))){
       return str+i;
     }
@@ -29,6 +29,21 @@ char *word_start(char *str){
   return str+i;
 }
 
+char *token_terminator(char *token){
+  int i;
+  for (i = 0; (token + i) != '\0'; i++){
+    /* Checks that current position is an empty space  */
+    if (space_char(*(token + i))){
+      return token + i;
+    }
+  }
+  return token + i;
+}
+
+int count_tokens(char *str){
+  int tokenCount = 0;
+  return 0;
+}
 
 char *copy_str(char *inStr, short len){
   char *strCopy = malloc((len+1) * sizeof(char));
@@ -47,4 +62,16 @@ void print_tokens(char **tokens){
   for (int i = 0; tokens[i] != 0; i++){
     printf("%s\n", tokens[i]);
   }
+}
+
+void free_tokens(char **tokens){
+  for (int i = 0; tokens[i] != 0; i++){
+    /*
+      Free ups the space use by functions like malloc/calloc
+      Free ups single words
+     */
+    free(tokens[i]);
+  }
+  /* Free ups whole token  */
+  free(tokens);
 }
