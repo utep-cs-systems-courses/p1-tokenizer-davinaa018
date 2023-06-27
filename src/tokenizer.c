@@ -42,6 +42,17 @@ char *token_terminator(char *token){
 
 int count_tokens(char *str){
   int tokenCount = 0;
+  char *token = token_start(str);
+  while(*token != '\0'){
+    /*Checks that current value is a valid token */
+    if(non_space_char(*token)){
+      tokenCount += 1;
+    }
+    /* Goes to the end of the token/string/word */
+    token = token_terminator(token);
+    /* Goes to the beginning of the token/word */
+    token = token_start(token);
+  }
   return 0;
 }
 
