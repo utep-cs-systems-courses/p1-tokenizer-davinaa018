@@ -1,4 +1,0 @@
-tokenizer.o: uimain.c tokenizer.c history.c
-	gcc uimain.c tokenizer.c history.c -o tokenizer.o
-clean:
-	rm -f *.o

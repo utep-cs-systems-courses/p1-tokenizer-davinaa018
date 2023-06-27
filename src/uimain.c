@@ -6,7 +6,7 @@ int main(){
   char word[MAX_CHAR];
 
   printf("Enter a word: ");
-  scanf("%s", word);
+  fgets(word, MAX_CHAR, stdin);
 
   printf("You entered: %s\n", word);
   
