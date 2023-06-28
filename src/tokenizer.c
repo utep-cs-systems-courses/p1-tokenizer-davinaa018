@@ -59,23 +59,27 @@ char *copy_str(char *inStr, short len){
   return strCopy;
 }
 
-char **tokenizer(char *str){
+char **tokenize(char *str){
+  printf("start of tokenize");
   int num_token = count_tokens(str);
-  char **tokens = malloc((num_token + 1) * sizeof(char*));
-
+  char **tokens =(char**)  malloc((num_token + 1) * sizeof(char*));
+  if(tokens == (char**) NULL) exit(-1);
+  
   char *tokenStart = str;
   char *tokenEnd;
   for (int i = 0; i < num_token; i++){
+    printf("Start");
     tokenStart = token_start(tokenStart);
     tokenEnd = token_terminator(tokenStart);
     tokens[i] = copy_str(tokenStart, tokenEnd - tokenStart);
     tokenStart = tokenEnd;
   }
   tokens[num_token] = '\0';
+  tokens[num_token] = (char*) NULL;
   return tokens;
 }
 
-/* Prints all tokens  */
+/* Prints all tokens FIX  */
 void print_tokens(char **tokens){
   for (int i = 0; tokens[i] != 0; i++){
     printf("%s\n", tokens[i]);
@@ -87,6 +91,8 @@ void free_tokens(char **tokens){
     /*
       Free ups the space use by functions like malloc/calloc
       Free ups single words
+
+      FIX
      */
     free(tokens[i]);
   }
