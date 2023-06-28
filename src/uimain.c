@@ -4,7 +4,8 @@
 
 int main(){
   char word[MAX_CHAR];
-
+  List *list = init_history();
+  
   printf("Enter a word or Enter q to quit program: ");
   fgets(word, MAX_CHAR, stdin);
 

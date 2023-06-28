@@ -4,18 +4,12 @@
 
 /* Returns true if char is either a tab ('\t') or " "*/
 int space_char(char c){
-  if (c == '\t' || c == ' '){
-    return 1
-  }
-  return 0;
+  return (c == ' ' || c == '\t');
 }
 
 /* Return true if char is not a tab ('\t') or a ' '  */
 int non_space_char(char c){
-  if (c != '\t' || c != ' '){
-    return 1;
-  }
-  return 0;
+  return (c != ' ' && c != '\t' && c != '\0');
 }
 
 char *token_start(char *str){
@@ -44,14 +38,11 @@ int count_tokens(char *str){
   int tokenCount = 0;
   char *token = token_start(str);
   while(*token != '\0'){
-    /*Checks that current value is a valid token */
-    if(non_space_char(*token)){
-      tokenCount += 1;
-    }
     /* Goes to the end of the token/string/word */
     token = token_terminator(token);
     /* Goes to the beginning of the token/word */
     token = token_start(token);
+    tokenCount += 1;
   }
   return 0;
 }
@@ -66,6 +57,22 @@ char *copy_str(char *inStr, short len){
   strCopy[i] = '\0';
   
   return strCopy;
+}
+
+char **tokenizer(char *str){
+  int num_token = count_tokens(str);
+  char **tokens = malloc((num_token + 1) * sizeof(char*));
+
+  char *tokenStart = str;
+  char *tokenEnd;
+  for (int i = 0; i < num_token; i++){
+    tokenStart = token_start(tokenStart);
+    tokenEnd = token_terminator(tokenStart);
+    tokens[i] = copy_str(tokenStart, tokenEnd - tokenStart);
+    tokenStart = tokenEnd;
+  }
+  tokens[num_token] = '\0';
+  return tokens;
 }
 
 /* Prints all tokens  */
