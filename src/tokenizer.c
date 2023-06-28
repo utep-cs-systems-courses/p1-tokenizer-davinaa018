@@ -44,7 +44,7 @@ int count_tokens(char *str){
     token = token_start(token);
     tokenCount += 1;
   }
-  return 0;
+  return tokenCount;
 }
 
 char *copy_str(char *inStr, short len){

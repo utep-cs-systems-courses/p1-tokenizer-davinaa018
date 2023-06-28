@@ -1,20 +1,31 @@
 #include <stdio.h>
+#include "tokenizer.h"
+#include "history.h"
 #define MAX_CHAR 300
 
 
 int main(){
   char word[MAX_CHAR];
-  List *list = init_history();
+  List *history = init_history();
   
-  printf("Enter a word or Enter q to quit program: ");
-  fgets(word, MAX_CHAR, stdin);
+  while(1){
+    printf("1. Enter a word to tokenize, \n 2.Enter 'q' to quit the program, \n Enter 'h' to check view history \n");
+    printf(">");
+    fgets(word, MAX_CHAR, stdin);
 
-  if (word[0] == 'q'){
-    printf("Terminating program...");
-    return 0;
+    if (word[0] == 'q'){
+      printf("Terminating program...");
+      free_history(history);
+      return 0;
+    }
+    else if(word[0] == 'h'){
+      print_history(history);
+    }else{
+      char **tokens = tokenize(input);
+      print_tokens(tokens);
+      add_history(history, input);
+    }
   }
-
-  printf("You entered: %s\n", word);
   
   return 0;
 }
