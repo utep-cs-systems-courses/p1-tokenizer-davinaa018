@@ -13,36 +13,29 @@ int non_space_char(char c){
 }
 
 char *token_start(char *str){
-  int i;
-  for (i = 0; *(str + i) != '\0'; i++){
-    /* Checks that current position is not an empty space */
-    if (non_space_char(*(str+i))){
-      return str+i;
+  while(*str != '\0'){
+    if(non_space_char(*str)){
+      return str;
     }
+    str++;
   }
-  return str+i;
+  return 0;
 }
 
 char *token_terminator(char *token){
-  int i;
-  for (i = 0; (token + i) != '\0'; i++){
-    /* Checks that current position is an empty space  */
-    if (space_char(*(token + i))){
-      return token + i;
-    }
+  while(non_space_char(*token)){
+    token++;
   }
-  return token + i;
+  return token;
 }
 
 int count_tokens(char *str){
   int tokenCount = 0;
-  char *token = token_start(str);
+  char *token = str;
   while(*token != '\0'){
-    /* Goes to the end of the token/string/word */
-    token = token_terminator(token);
-    /* Goes to the beginning of the token/word */
     token = token_start(token);
-    tokenCount += 1;
+    token = token_terminator(token);
+    tokenCount++;
   }
   return tokenCount;
 }
@@ -60,22 +53,18 @@ char *copy_str(char *inStr, short len){
 }
 
 char **tokenize(char *str){
-  printf("start of tokenize");
-  int num_token = count_tokens(str);
-  char **tokens =(char**)  malloc((num_token + 1) * sizeof(char*));
-  if(tokens == (char**) NULL) exit(-1);
-  
-  char *tokenStart = str;
-  char *tokenEnd;
-  for (int i = 0; i < num_token; i++){
-    printf("Start");
-    tokenStart = token_start(tokenStart);
-    tokenEnd = token_terminator(tokenStart);
-    tokens[i] = copy_str(tokenStart, tokenEnd - tokenStart);
-    tokenStart = tokenEnd;
+  int num_tokens = count_tokens(str);
+  char **tokens = malloc((num_tokens + 1) * sizeof(char*));
+  int i = 0;
+  while(*str != '\0'){
+    str = token_start(str);
+    char *end = token_terminator(str);
+    tokens[i] = copy_str(str, end-str);
+    str = end;
+    i++;
   }
-  tokens[num_token] = '\0';
-  tokens[num_token] = (char*) NULL;
+  /* Makes last index null/zero */
+  tokens[i] = 0;
   return tokens;
 }
 
