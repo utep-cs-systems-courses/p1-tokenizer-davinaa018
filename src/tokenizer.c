@@ -68,23 +68,19 @@ char **tokenize(char *str){
   return tokens;
 }
 
-/* Prints all tokens FIX  */
+/* Prints all tokens  */
 void print_tokens(char **tokens){
-  for (int i = 0; tokens[i] != 0; i++){
-    printf("%s\n", tokens[i]);
+  while(*tokens != 0){
+    printf("%s",*tokens);
+    tokens++;
   }
 }
 
 void free_tokens(char **tokens){
-  for (int i = 0; tokens[i] != 0; i++){
-    /*
-      Free ups the space use by functions like malloc/calloc
-      Free ups single words
-
-      FIX
-     */
-    free(tokens[i]);
+  char** temp = tokens;
+  while(*temp != 0){
+    free(*temp);
+    temp++;
   }
-  /* Free ups whole token  */
   free(tokens);
 }

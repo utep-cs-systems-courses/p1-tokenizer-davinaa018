@@ -21,10 +21,9 @@ int main(){
     else if(word[0] == 'h'){
       print_history(history);
     }else{
-      printf("%s", word);
       char **tokens = tokenize(word);
-      /*print_tokens(tokens);
-	add_history(history, word);*/
+      print_tokens(tokens);
+      /*add_history(history, word);*/
     }
   }
   
