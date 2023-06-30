@@ -35,6 +35,17 @@ void add_history(List *list, char *str){
   }
 }
 
+char *get_history(List *list, int id){
+  Item *curr = list->root;
+  while(curr != NULL){
+    if(curr -> id == id){
+      return curr -> str;
+    }
+    curr = curr -> next;
+  }
+  return NULL;
+}
+
 
 /* Print History  */
 void print_history(List *list){
@@ -44,4 +55,15 @@ void print_history(List *list){
     printf("%d. %s", temp->id, temp->str);
     temp = temp->next;
   }
+}
+
+void free_history(List *list){
+  Item *curr = list -> root;
+  while(curr != NULL){
+    Item *prev = curr;
+    curr = curr->next;
+    free(prev->str);
+    free(prev);
+  }
+  free(list);
 }
