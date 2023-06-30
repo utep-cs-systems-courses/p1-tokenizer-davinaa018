@@ -5,31 +5,42 @@
 
 /* Initialize linked list to keep history  */
 List *init_history(){
-  List *list = malloc(sizeof(List));
-  list->root = NULL;
+  List *list = (List*) malloc(sizeof(List));
   return list;
 }
 
 /* Adding an item to history  */
 void add_history(List *list, char *str){
-  int itemId = 0;
-  Item *newItem = list->root;
+  Item *newItem = (Item*) malloc(sizeof(Item));
+  char *newPointer = str;
+  if(newPointer == NULL) exit(-1);
 
-  while (newItem){
-    newItem = newItem->next;
-    itemId += 1;
+  while(*newPointer != '\0'){
+    newPointer++;
   }
-  newItem = malloc(sizeof(Item));
-  newItem->id = itemId;
-  newItem->str = str;
+
+  newItem -> str = copy_str(str, newPointer - str);
+  Item *currentItem = list -> root;
+  int id = 2;
+  if(currentItem == NULL){
+    list -> root = newItem;
+    newItem -> id = 1;
+  }else{
+    while(currentItem -> next != NULL){
+      currentItem = currentItem -> next;
+      id++;
+    }
+    newItem -> id = id;
+    currentItem -> next = newItem;
+  }
 }
 
 
 /* Print History  */
 void print_history(List *list){
-  Item *temp = list->root->next;
+  Item *temp = list->root;
   /* Loops till its null/empty  */
-  while (temp != 0){
+  while (temp != NULL){
     printf("%d. %s", temp->id, temp->str);
     temp = temp->next;
   }

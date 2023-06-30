@@ -23,7 +23,7 @@ int main(){
     }else{
       char **tokens = tokenize(word);
       print_tokens(tokens);
-      /*add_history(history, word);*/
+      add_history(history, word);
     }
   }
   
